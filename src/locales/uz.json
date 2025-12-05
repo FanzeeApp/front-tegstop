@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "Qidiruv Tizimi"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "myRecords": "Mening yozuvlarim",
+    "addRecord": "Qo'shish",
+    "bulkUpload": "Ko'p yuklash",
+    "profile": "Profil",
+    "logout": "Chiqish"
+  },
+  "auth": {
+    "login": "Kirish",
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "loginButton": "Kirish",
+    "loginError": "Kirishda xatolik. Qayta urinib ko'ring.",
+    "invalidCredentials": "Noto'g'ri foydalanuvchi nomi yoki parol"
+  },
+  "search": {
+    "title": "Qidiruv",
+    "passportSeries": "Passport seriyasi",
+    "passportCode": "Passport raqami",
+    "searchButton": "Qidirish",
+    "notFound": "Ma'lumot topilmadi",
+    "notFoundDesc": "Kiritilgan passport ma'lumotlari bo'yicha hech narsa topilmadi"
+  },
+  "record": {
+    "fullName": "To'liq ism",
+    "status": "Holati",
+    "addedBy": "Qo'shgan",
+    "addedAt": "Qo'shilgan vaqt",
+    "statusNasiya": "Nasiyada ishlatmoqda",
+    "statusUnpaid": "To'lov qilinmagan mijoz"
+  },
+  "myRecords": {
+    "title": "Mening yozuvlarim",
+    "noRecords": "Yozuvlar topilmadi",
+    "noRecordsDesc": "Siz hali hech qanday yozuv qo'shmadingiz",
+    "name": "Ism",
+    "surname": "Familiya",
+    "passport": "Passport",
+    "type": "Turi",
+    "created": "Yaratilgan",
+    "typeNasiya": "Nasiya mijoz",
+    "typeUnpaid": "To'lov qilinmagan"
+  },
+  "addRecord": {
+    "title": "Yangi yozuv qo'shish",
+    "name": "Ism (ixtiyoriy)",
+    "surname": "Familiya (ixtiyoriy)",
+    "passportSeries": "Passport seriyasi",
+    "passportCode": "Passport raqami",
+    "type": "Turi",
+    "typeNasiya": "Nasiya mijoz",
+    "typeUnpaid": "To'lov qilinmagan mijoz",
+    "submit": "Qo'shish",
+    "success": "Yozuv muvaffaqiyatli qo'shildi",
+    "error": "Xatolik yuz berdi. Qayta urinib ko'ring.",
+    "passportCodeHelper": "7 raqamli kod kiriting"
+  },
+  "bulkUpload": {
+    "title": "Ko'p yozuv yuklash",
+    "description": "Excel yoki CSV fayl orqali bir necha yozuvni birdan qo'shing",
+    "uploadTitle": "Fayl yuklash",
+    "uploadDescription": "Excel (.xlsx, .xls) yoki CSV (.csv) formatdagi faylni yuklang",
+    "templateDownload": "Template yuklab oling",
+    "templateDescription": "To'g'ri formatda fayl tayyorlash uchun namuna faylni yuklab oling",
+    "selectFile": "Fayl tanlang",
+    "selected": "Tanlangan",
+    "uploading": "Yuklanmoqda...",
+    "upload": "Yuklash",
+    "successRecords": "ta yozuv muvaffaqiyatli qo'shildi",
+    "failedRecords": "ta yozuvda xatolik",
+    "andMore": "va yana",
+    "moreErrors": "ta xatolik",
+    "instructions": "Yo'riqnoma",
+    "step1": "Template faylni yuklab oling va to'ldiring",
+    "step2": "Passport Seriya: AD, AB, KA, AE, AC",
+    "step3": "Passport Code: 7 raqamli son (masalan: 1234567)",
+    "step4": "Turi: NasiyaMijoz yoki TolovQilinmagan",
+    "step5": "Oylar Soni: faqat NasiyaMijoz uchun (1-12)",
+    "errorFileType": "Faqat Excel yoki CSV fayl yuklang!",
+    "errorFileSize": "Fayl hajmi 10MB dan kichik bo'lishi kerak!",
+    "errorNoFile": "Iltimos, fayl tanlang!",
+    "errorUpload": "Yuklashda xatolik yuz berdi"
+  },
+  "theme": {
+    "light": "Yorug'",
+    "dark": "Qorong'i"
+  },
+  "profile": {
+    "title": "Profil",
+    "userInfo": "Foydalanuvchi ma'lumotlari",
+    "name": "Ism",
+    "username": "Foydalanuvchi nomi",
+    "phone": "Telefon",
+    "role": "Rol",
+    "accountCreated": "Hisob yaratilgan",
+    "logoutButton": "Chiqish"
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik",
+    "success": "Muvaffaqiyatli"
+  }
+}

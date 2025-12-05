@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /profile
+Disallow: /my-records
+Disallow: /add-record
+
+Sitemap: https://tegstop.uz/sitemap.xml

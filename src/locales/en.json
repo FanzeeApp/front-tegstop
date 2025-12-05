@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "Search System"
+  },
+  "nav": {
+    "home": "Home",
+    "myRecords": "My Records",
+    "addRecord": "Add",
+    "bulkUpload": "Bulk Upload",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "loginButton": "Login",
+    "loginError": "Login error. Please try again.",
+    "invalidCredentials": "Invalid username or password"
+  },
+  "search": {
+    "title": "Search",
+    "passportSeries": "Passport Series",
+    "passportCode": "Passport Number",
+    "searchButton": "Search",
+    "notFound": "Information not found",
+    "notFoundDesc": "Nothing found for the entered passport data"
+  },
+  "record": {
+    "fullName": "Full Name",
+    "status": "Status",
+    "addedBy": "Added by",
+    "addedAt": "Added at",
+    "statusNasiya": "Using on installment",
+    "statusUnpaid": "Unpaid customer"
+  },
+  "myRecords": {
+    "title": "My Records",
+    "noRecords": "No records found",
+    "noRecordsDesc": "You haven't added any records yet",
+    "name": "Name",
+    "surname": "Surname",
+    "passport": "Passport",
+    "type": "Type",
+    "created": "Created",
+    "typeNasiya": "Installment client",
+    "typeUnpaid": "Unpaid"
+  },
+  "addRecord": {
+    "title": "Add New Record",
+    "name": "Name (optional)",
+    "surname": "Surname (optional)",
+    "passportSeries": "Passport Series",
+    "passportCode": "Passport Number",
+    "type": "Type",
+    "typeNasiya": "Installment client",
+    "typeUnpaid": "Unpaid client",
+    "submit": "Add",
+    "success": "Record added successfully",
+    "error": "An error occurred. Please try again.",
+    "passportCodeHelper": "Enter 7-digit code"
+  },
+  "bulkUpload": {
+    "title": "Bulk Upload Records",
+    "description": "Add multiple records at once via Excel or CSV file",
+    "uploadTitle": "File Upload",
+    "uploadDescription": "Upload file in Excel (.xlsx, .xls) or CSV (.csv) format",
+    "templateDownload": "Download Template",
+    "templateDescription": "Download sample file to prepare data in the correct format",
+    "selectFile": "Select File",
+    "selected": "Selected",
+    "uploading": "Uploading...",
+    "upload": "Upload",
+    "successRecords": "records successfully added",
+    "failedRecords": "records with errors",
+    "andMore": "and",
+    "moreErrors": "more errors",
+    "instructions": "Instructions",
+    "step1": "Download and fill out the template file",
+    "step2": "Passport Series: AD, AB, KA, AE, AC",
+    "step3": "Passport Code: 7-digit number (e.g.: 1234567)",
+    "step4": "Type: NasiyaMijoz or TolovQilinmagan",
+    "step5": "Months Count: only for NasiyaMijoz (1-12)",
+    "errorFileType": "Please upload only Excel or CSV file!",
+    "errorFileSize": "File size must be less than 10MB!",
+    "errorNoFile": "Please select a file!",
+    "errorUpload": "Error occurred during upload"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "profile": {
+    "title": "Profile",
+    "userInfo": "User Information",
+    "name": "Name",
+    "username": "Username",
+    "phone": "Phone",
+    "role": "Role",
+    "accountCreated": "Account Created",
+    "logoutButton": "Logout"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
+}

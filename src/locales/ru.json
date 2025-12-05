@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "Система Поиска"
+  },
+  "nav": {
+    "home": "Главная",
+    "myRecords": "Мои записи",
+    "addRecord": "Добавить",
+    "bulkUpload": "Массовая загрузка",
+    "profile": "Профиль",
+    "logout": "Выйти"
+  },
+  "auth": {
+    "login": "Вход",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "loginButton": "Войти",
+    "loginError": "Ошибка входа. Попробуйте снова.",
+    "invalidCredentials": "Неверное имя пользователя или пароль"
+  },
+  "search": {
+    "title": "Поиск",
+    "passportSeries": "Серия паспорта",
+    "passportCode": "Номер паспорта",
+    "searchButton": "Поиск",
+    "notFound": "Данные не найдены",
+    "notFoundDesc": "По введённым паспортным данным ничего не найдено"
+  },
+  "record": {
+    "fullName": "Полное имя",
+    "status": "Статус",
+    "addedBy": "Добавил",
+    "addedAt": "Дата добавления",
+    "statusNasiya": "Покупает в рассрочку",
+    "statusUnpaid": "Клиент с неоплаченным долгом"
+  },
+  "myRecords": {
+    "title": "Мои записи",
+    "noRecords": "Записей не найдено",
+    "noRecordsDesc": "Вы ещё не добавили ни одной записи",
+    "name": "Имя",
+    "surname": "Фамилия",
+    "passport": "Паспорт",
+    "type": "Тип",
+    "created": "Создано",
+    "typeNasiya": "Клиент в рассрочку",
+    "typeUnpaid": "Неоплаченный клиент"
+  },
+  "addRecord": {
+    "title": "Добавить новую запись",
+    "name": "Имя (необязательно)",
+    "surname": "Фамилия (необязательно)",
+    "passportSeries": "Серия паспорта",
+    "passportCode": "Номер паспорта",
+    "type": "Тип",
+    "typeNasiya": "Клиент в рассрочку",
+    "typeUnpaid": "Клиент с неоплаченным долгом",
+    "submit": "Добавить",
+    "success": "Запись успешно добавлена",
+    "error": "Произошла ошибка. Попробуйте снова.",
+    "passportCodeHelper": "Введите 7-значный номер"
+  },
+  "bulkUpload": {
+    "title": "Массовая загрузка",
+    "description": "Загрузите несколько записей сразу через файл Excel или CSV",
+    "uploadTitle": "Загрузка файла",
+    "uploadDescription": "Загрузите файл формата Excel (.xlsx, .xls) или CSV (.csv)",
+    "templateDownload": "Скачать шаблон",
+    "templateDescription": "Скачайте пример файла для правильного оформления данных",
+    "selectFile": "Выберите файл",
+    "selected": "Выбрано",
+    "uploading": "Загрузка...",
+    "upload": "Загрузить",
+    "successRecords": "записей успешно добавлено",
+    "failedRecords": "записей с ошибками",
+    "andMore": "и ещё",
+    "moreErrors": "ошибок",
+    "instructions": "Инструкция",
+    "step1": "Скачайте шаблон и заполните его",
+    "step2": "Серия паспорта: AD, AB, KA, AE, AC",
+    "step3": "Номер паспорта: 7-значное число (например: 1234567)",
+    "step4": "Тип: NasiyaMijoz или TolovQilinmagan",
+    "step5": "Количество месяцев: только для NasiyaMijoz (1–12)",
+    "errorFileType": "Загрузите только Excel или CSV файл!",
+    "errorFileSize": "Размер файла должен быть меньше 10MB!",
+    "errorNoFile": "Пожалуйста, выберите файл!",
+    "errorUpload": "Произошла ошибка при загрузке"
+  },
+  "theme": {
+    "light": "Светлая",
+    "dark": "Тёмная"
+  },
+  "profile": {
+    "title": "Профиль",
+    "userInfo": "Информация о пользователе",
+    "name": "Имя",
+    "username": "Имя пользователя",
+    "phone": "Телефон",
+    "role": "Роль",
+    "accountCreated": "Аккаунт создан",
+    "logoutButton": "Выйти"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно"
+  }
+}

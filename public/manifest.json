@@ -1,0 +1,87 @@
+{
+    "name": "Tegstop - Firibgarlardan Himoya",
+    "short_name": "Tegstop",
+    "description": "O'zbekistonda firibgarlar va qarzdorlar haqida ma'lumot platformasi",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3b82f6",
+    "orientation": "portrait",
+    "scope": "/",
+    "lang": "uz-UZ",
+    "dir": "ltr",
+    "categories": ["productivity", "utilities", "social"],
+    "screenshots": [
+      {
+        "src": "/screenshots/home.png",
+        "sizes": "1280x720",
+        "type": "image/png",
+        "platform": "wide",
+        "label": "Asosiy sahifa - Qidiruv"
+      },
+      {
+        "src": "/screenshots/mobile.png",
+        "sizes": "750x1334",
+        "type": "image/png",
+        "platform": "narrow",
+        "label": "Mobil ko'rinish"
+      }
+    ],
+    "icons": [
+      {
+        "src": "/icons/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "/icons/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "shortcuts": [
+      {
+        "name": "Qidiruv",
+        "short_name": "Qidiruv",
+        "description": "Firibgarlarni qidirish",
+        "url": "/?source=shortcut",
+        "icons": [
+          {
+            "src": "/icons/search-icon.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          }
+        ]
+      },
+      {
+        "name": "Yozuv qo'shish",
+        "short_name": "Qo'shish",
+        "description": "Yangi yozuv qo'shish",
+        "url": "/add-record?source=shortcut",
+        "icons": [
+          {
+            "src": "/icons/add-icon.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          }
+        ]
+      },
+      {
+        "name": "Mening yozuvlarim",
+        "short_name": "Yozuvlar",
+        "description": "Mening barcha yozuvlarim",
+        "url": "/my-records?source=shortcut",
+        "icons": [
+          {
+            "src": "/icons/records-icon.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          }
+        ]
+      }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+  }
