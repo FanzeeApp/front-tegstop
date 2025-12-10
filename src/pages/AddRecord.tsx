@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { Plus, Loader2 } from "lucide-react";
+import { Plus, Loader2, AlertCircle } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -26,11 +27,11 @@ import { Navbar } from "@/components/Navbar";
 import { toast } from "sonner";
 import type { CreateRecordData } from "@/types";
 import { useFraudsters } from "@/hooks/useFraudster";
-import { 
-  trackRecord, 
-  trackFormSubmit, 
+import {
+  trackRecord,
+  trackFormSubmit,
   trackError,
-  trackEvent 
+  trackEvent
 } from "@/utils/analytics";
 
 export default function AddRecord() {
@@ -45,12 +46,13 @@ export default function AddRecord() {
     passportCode: "",
     type: "NasiyaMijoz",
     time: 1,
+    note: "",
   });
 
   // Sahifa yuklanganda tracking
   useEffect(() => {
     trackEvent('page_view', {
-      page_title: 'Yozuuv Qo\'shish',
+      page_title: 'Yozuv Qo\'shish',
       page_location: window.location.href,
     });
   }, []);
@@ -58,18 +60,37 @@ export default function AddRecord() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Form validatsiya
+    // Ism validatsiya - MAJBURIY
+    if (!formData.name || formData.name.trim().length < 2) {
+      toast.error("Ism kiritilishi shart (kamida 2 ta belgi)");
+      trackError("Ism kiritilmagan", "AddRecord/handleSubmit");
+      return;
+    }
+
+    // Familiya validatsiya - MAJBURIY
+    if (!formData.surname || formData.surname.trim().length < 2) {
+      toast.error("Familiya kiritilishi shart (kamida 2 ta belgi)");
+      trackError("Familiya kiritilmagan", "AddRecord/handleSubmit");
+      return;
+    }
+
+    // Passport validatsiya
     if (!formData.passportSeriya || !formData.passportCode) {
       toast.error(t("common.error"));
-      // Xatolik tracking
       trackError("Passport ma'lumotlari to'ldirilmagan", "AddRecord/handleSubmit");
       return;
     }
 
     if (formData.passportCode.length !== 7) {
       toast.error(t("addRecord.passportCodeHelper"));
-      // Xatolik tracking
       trackError("Passport raqami noto'g'ri formatda", "AddRecord/handleSubmit");
+      return;
+    }
+
+    // TolovQilinmagan uchun izoh MAJBURIY
+    if (formData.type === "TolovQilinmagan" && (!formData.note || formData.note.trim().length < 5)) {
+      toast.error("To'lov qilinmagan uchun izoh kiritilishi shart (kamida 5 ta belgi)");
+      trackError("Izoh kiritilmagan", "AddRecord/handleSubmit");
       return;
     }
 
@@ -82,13 +103,18 @@ export default function AddRecord() {
     });
 
     try {
-      await createFraudster.mutateAsync(formData);
-      
+      // NasiyaMijoz uchun note ni olib tashlash
+      const dataToSend = {
+        ...formData,
+        note: formData.type === "TolovQilinmagan" ? formData.note : undefined,
+      };
+
+      await createFraudster.mutateAsync(dataToSend);
+
       // Muvaffaqiyatli qo'shilganda tracking
       trackRecord('add');
       trackFormSubmit('add_record_form');
-      
-      // Qo'shimcha ma'lumotlar bilan event
+
       trackEvent('record_created', {
         record_type: formData.type,
         passport_series: formData.passportSeriya,
@@ -101,12 +127,10 @@ export default function AddRecord() {
       navigate("/my-records");
     } catch (error: any) {
       console.error("Create fraudster error:", error);
-      
-      // Xatolik tracking
+
       const errorMessage = error.response?.data?.message || t("addRecord.error");
       trackError(errorMessage, "AddRecord/handleSubmit");
-      
-      // Xatolik turi bo'yicha tracking
+
       trackEvent('form_error', {
         form_name: 'add_record',
         error_type: error.response?.status || 'unknown',
@@ -129,7 +153,7 @@ export default function AddRecord() {
 
   // Tip o'zgarganda tracking
   const handleTypeChange = (value: any) => {
-    setFormData({ ...formData, type: value });
+    setFormData({ ...formData, type: value, note: "" });
     trackEvent('select_record_type', {
       type: value,
     });
@@ -143,10 +167,8 @@ export default function AddRecord() {
     });
   };
 
-  // Input o'zgarishlarini tracking (optional - faqat kerak bo'lsa)
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, name: e.target.value });
-    // Faqat ma'lumot kiritilganda tracking
     if (e.target.value && !formData.name) {
       trackEvent('field_filled', { field: 'name' });
     }
@@ -164,9 +186,9 @@ export default function AddRecord() {
       {/* SEO Meta Tags */}
       <Helmet>
         <title>Yozuv Qo'shish - Tegstop.uz | Firibgarlardan Himoya</title>
-        <meta 
-          name="description" 
-          content="Firibgar yoki qarzdor haqida ma'lumot qo'shing. Passport ma'lumotlari va to'lov turi bo'yicha yozuv yarating." 
+        <meta
+          name="description"
+          content="Firibgar yoki qarzdor haqida ma'lumot qo'shing. Passport ma'lumotlari va to'lov turi bo'yicha yozuv yarating."
         />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://tegstop.uz/add-record" />
@@ -198,11 +220,49 @@ export default function AddRecord() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Ism / Familiya - MAJBURIY */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="flex items-center gap-1">
+                      {t("addRecord.name")}
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder={t("addRecord.name")}
+                      value={formData.name}
+                      onChange={handleNameChange}
+                      disabled={loading}
+                      required
+                      minLength={2}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="surname" className="flex items-center gap-1">
+                      {t("addRecord.surname")}
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="surname"
+                      type="text"
+                      placeholder={t("addRecord.surname")}
+                      value={formData.surname}
+                      onChange={handleSurnameChange}
+                      disabled={loading}
+                      required
+                      minLength={2}
+                    />
+                  </div>
+                </div>
+
                 {/* Pasport ma'lumotlari */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="passportSeriya">
+                    <Label htmlFor="passportSeriya" className="flex items-center gap-1">
                       {t("addRecord.passportSeries")}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Select
                       value={formData.passportSeriya}
@@ -222,8 +282,9 @@ export default function AddRecord() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="passportCode">
+                    <Label htmlFor="passportCode" className="flex items-center gap-1">
                       {t("addRecord.passportCode")}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="passportCode"
@@ -236,6 +297,7 @@ export default function AddRecord() {
                         setFormData({ ...formData, passportCode: value });
                       }}
                       disabled={loading}
+                      required
                     />
                     <p className="text-xs text-muted-foreground">
                       {t("addRecord.passportCodeHelper")}
@@ -245,7 +307,10 @@ export default function AddRecord() {
 
                 {/* Turini tanlash */}
                 <div className="space-y-3">
-                  <Label>{t("addRecord.type")}</Label>
+                  <Label className="flex items-center gap-1">
+                    {t("addRecord.type")}
+                    <span className="text-red-500">*</span>
+                  </Label>
                   <RadioGroup
                     value={formData.type}
                     onValueChange={handleTypeChange}
@@ -280,7 +345,7 @@ export default function AddRecord() {
                       <SelectContent>
                         {[...Array(12)].map((_, i) => (
                           <SelectItem key={i + 1} value={(i + 1).toString()}>
-                            {i + 1} {i + 1 === 1 ? "oy" : "oy"}
+                            {i + 1} oy
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -288,32 +353,33 @@ export default function AddRecord() {
                   </div>
                 )}
 
-                {/* Ism / Familiya */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* TolovQilinmagan uchun izoh - MAJBURIY */}
+                {formData.type === "TolovQilinmagan" && (
                   <div className="space-y-2">
-                    <Label htmlFor="name">{t("addRecord.name")}</Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder={t("addRecord.name")}
-                      value={formData.name}
-                      onChange={handleNameChange}
+                    <Label htmlFor="note" className="flex items-center gap-1">
+                      Izoh (sababi)
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <Textarea
+                      id="note"
+                      placeholder="Masalan: Kredit to'lamadi, telefon uchun qarz..."
+                      value={formData.note || ""}
+                      onChange={(e) => setFormData({ ...formData, note: e.target.value })}
                       disabled={loading}
+                      required
+                      minLength={5}
+                      rows={3}
+                      className="resize-none"
                     />
+                    <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg">
+                      <AlertCircle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-xs text-amber-700 dark:text-amber-400">
+                        To'lov qilinmagan yozuv uchun izoh yozish majburiy. Bu boshqa foydalanuvchilarga
+                        vaziyatni tushunishga yordam beradi.
+                      </p>
+                    </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="surname">{t("addRecord.surname")}</Label>
-                    <Input
-                      id="surname"
-                      type="text"
-                      placeholder={t("addRecord.surname")}
-                      value={formData.surname}
-                      onChange={handleSurnameChange}
-                      disabled={loading}
-                    />
-                  </div>
-                </div>
+                )}
 
                 {/* Submit tugmasi */}
                 <Button

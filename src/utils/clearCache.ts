@@ -34,7 +34,6 @@ export const clearAllCache = async () => {
         });
       }
       
-      console.log('✅ All cache cleared successfully');
       return true;
     } catch (error) {
       console.error('❌ Error clearing cache:', error);
@@ -56,6 +55,4 @@ export const clearAllCache = async () => {
     // Theme va tilni qaytarish
     if (theme) localStorage.setItem('theme-storage', theme);
     if (language) localStorage.setItem('i18nextLng', language);
-    
-    console.log('✅ User data cleared, theme preserved');
   };

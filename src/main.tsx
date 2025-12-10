@@ -11,5 +11,4 @@ registerServiceWorker();
 // PWA Install Prompt ni to'xtatish
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
-  console.log('PWA install prompt blocked');
 });

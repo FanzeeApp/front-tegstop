@@ -24,7 +24,12 @@
     "passportCode": "Номер паспорта",
     "searchButton": "Поиск",
     "notFound": "Данные не найдены",
-    "notFoundDesc": "По введённым паспортным данным ничего не найдено"
+    "notFoundDesc": "По введённым паспортным данным ничего не найдено",
+    "resultsFound": "Результат найден",
+    "viewDetails": "Подробнее",
+    "addedByInfo": "Добавил пользователь",
+    "verifiedUser": "Подтверждённый пользователь",
+    "clean": "Чисто"
   },
   "record": {
     "fullName": "Полное имя",
@@ -48,8 +53,8 @@
   },
   "addRecord": {
     "title": "Добавить новую запись",
-    "name": "Имя (необязательно)",
-    "surname": "Фамилия (необязательно)",
+    "name": "Имя",
+    "surname": "Фамилия",
     "passportSeries": "Серия паспорта",
     "passportCode": "Номер паспорта",
     "type": "Тип",
@@ -98,11 +103,29 @@
     "phone": "Телефон",
     "role": "Роль",
     "accountCreated": "Аккаунт создан",
-    "logoutButton": "Выйти"
+    "logoutButton": "Выйти",
+    "balance": "Баланс",
+    "totalEarned": "Всего заработано",
+    "referralCode": "Реферальный код",
+    "referralCodeDesc": "Приглашайте друзей и зарабатывайте",
+    "copyCode": "Копировать",
+    "copied": "Скопировано!",
+    "invitedFriends": "Приглашённые друзья",
+    "invitedFriendsDesc": "Друзья, приглашённые по реферальной программе",
+    "totalInvited": "всего приглашённых друзей",
+    "activeFriends": "Активные друзья",
+    "pendingFriends": "Ожидают",
+    "bonusSystem": "Бонусная система",
+    "bonusRegistration": "При регистрации",
+    "bonusFirstRecord": "При добавлении первой записи",
+    "bonusTotal": "Общий бонус за каждого активного пользователя!",
+    "bonusWithdraw": "Вывод средств: через Telegram @saparboykayumov"
   },
   "common": {
     "loading": "Загрузка...",
     "error": "Ошибка",
-    "success": "Успешно"
+    "success": "Успешно",
+    "locale": "ru-RU",
+    "retry": "Повторить"
   }
 }

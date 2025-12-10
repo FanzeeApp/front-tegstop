@@ -76,6 +76,19 @@ export const useFraudsters = () => {
     },
   });
 
+  const markAsPaid = useMutation({
+    mutationFn: (id: string) =>
+      api.patch(`/fraudster/${id}/mark-paid`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["fraudster-my-count"] });
+      queryClient.invalidateQueries({ queryKey: ["fraudster"] });
+      queryClient.invalidateQueries({ queryKey: ["fraudster-search"] });
+    },
+    onError: (error) => {
+      console.error("Mark as paid failed:", error);
+    },
+  });
+
   return {
     getFraudster,
     deleteFraudster,
@@ -84,5 +97,6 @@ export const useFraudsters = () => {
     getFraudsterSearch,
     createFraudster,
     getOneFraudster,
+    markAsPaid,
   };
 };

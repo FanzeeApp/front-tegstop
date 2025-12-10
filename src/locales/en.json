@@ -23,8 +23,13 @@
     "passportSeries": "Passport Series",
     "passportCode": "Passport Number",
     "searchButton": "Search",
-    "notFound": "Information not found",
-    "notFoundDesc": "Nothing found for the entered passport data"
+    "notFound": "No data found",
+    "notFoundDesc": "Nothing found for the entered passport data",
+    "resultsFound": "Results found",
+    "viewDetails": "View details",
+    "addedByInfo": "Added by user",
+    "verifiedUser": "Verified user",
+    "clean": "Clean"
   },
   "record": {
     "fullName": "Full Name",
@@ -48,8 +53,8 @@
   },
   "addRecord": {
     "title": "Add New Record",
-    "name": "Name (optional)",
-    "surname": "Surname (optional)",
+    "name": "Name",
+    "surname": "Surname",
     "passportSeries": "Passport Series",
     "passportCode": "Passport Number",
     "type": "Type",
@@ -98,11 +103,29 @@
     "phone": "Phone",
     "role": "Role",
     "accountCreated": "Account Created",
-    "logoutButton": "Logout"
+    "logoutButton": "Logout",
+    "balance": "Balance",
+    "totalEarned": "Total Earned",
+    "referralCode": "Referral Code",
+    "referralCodeDesc": "Invite friends and earn money",
+    "copyCode": "Copy",
+    "copied": "Copied!",
+    "invitedFriends": "Invited Friends",
+    "invitedFriendsDesc": "Friends invited through the referral program",
+    "totalInvited": "total invited friends",
+    "activeFriends": "Active friends",
+    "pendingFriends": "Pending",
+    "bonusSystem": "Bonus System",
+    "bonusRegistration": "On registration",
+    "bonusFirstRecord": "On first record added",
+    "bonusTotal": "Total bonus for each active user!",
+    "bonusWithdraw": "Withdraw: via Telegram @saparboykayumov"
   },
   "common": {
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "locale": "en-US",
+    "retry": "Retry"
   }
 }

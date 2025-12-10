@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { FileText, Plus, Calendar, Loader2 } from "lucide-react";
+import { FileText, Plus, Calendar, Loader2, CheckCircle, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
@@ -16,23 +16,31 @@ import { Navbar } from "@/components/Navbar";
 import { toast } from "sonner";
 import { useFraudsters } from "@/hooks/useFraudster";
 import { trackRecord, trackEvent, trackError, trackButtonClick } from "@/utils/analytics";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function MyRecords() {
   const { t } = useTranslation();
-  const { getFraudsterMyCount, deleteFraudster } = useFraudsters();
-  
+  const { getFraudsterMyCount, deleteFraudster, markAsPaid } = useFraudsters();
+  const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
+  const [confirmDialog, setConfirmDialog] = useState<{ open: boolean; record: any | null }>({
+    open: false,
+    record: null,
+  });
+
   // Faqat 1 marta API call - useFraudster hook orqali
   const { data, isLoading, isError, refetch } = getFraudsterMyCount();
 
   // data endi to'g'ridan-to'g'ri array (hook ichida parse qilingan)
   const recordsData = data || [];
-  
-  // Debug log - faqat development da
-  useEffect(() => {
-    if (import.meta.env.DEV && recordsData.length > 0) {
-      console.log('Fraudster data:', recordsData);
-    }
-  }, [recordsData]);
 
   // Sahifa yuklanganda tracking
   useEffect(() => {
@@ -58,40 +66,64 @@ export default function MyRecords() {
     }
   }, [isError]);
 
-  // Yozuv o'chirish funksiyasi
-  const handleDelete = async (record: any) => {
-    if (confirm("Haqiqatan ham ushbu yozuvni o'chirmoqchimisiz?")) {
-      trackEvent('delete_attempt', {
-        record_id: record.id,
+  // "To'ladi" deb belgilash
+  const handleMarkAsPaid = async (record: any) => {
+    setMarkingPaidId(record.id);
+
+    trackEvent('mark_paid_attempt', {
+      record_id: record.id,
+      record_type: record.type,
+    });
+
+    try {
+      await markAsPaid.mutateAsync(record.id);
+
+      trackEvent('record_marked_paid', {
         record_type: record.type,
       });
 
-      try {
-        await deleteFraudster.mutateAsync(record.id);
-        
-        trackRecord('delete');
-        trackEvent('record_deleted', {
-          record_type: record.type,
-          passport_series: record.passportSeriya,
-        });
+      toast.success("Muvaffaqiyatli to'langan deb belgilandi ✅");
+      refetch();
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Xatolik yuz berdi");
+      trackError("To'langan deb belgilashda xatolik", "MyRecords/handleMarkAsPaid");
+    } finally {
+      setMarkingPaidId(null);
+    }
+  };
 
-        toast.success("Yozuv muvaffaqiyatli o'chirildi");
-        
-        // Ma'lumotlarni yangilash
-        refetch();
-      } catch (err) {
-        console.error(err);
-        toast.error("O'chirishda xatolik yuz berdi");
-        
-        trackError("Yozuvni o'chirishda xatolik", "MyRecords/handleDelete");
-        trackEvent('delete_failed', {
-          record_id: record.id,
-        });
-      }
-    } else {
-      trackEvent('delete_cancelled', {
-        record_id: record.id,
+  // Yozuv o'chirish funksiyasi
+  const handleDelete = async (record: any) => {
+    setConfirmDialog({ open: true, record });
+  };
+
+  const confirmDelete = async () => {
+    const record = confirmDialog.record;
+    if (!record) return;
+
+    setConfirmDialog({ open: false, record: null });
+
+    trackEvent('delete_attempt', {
+      record_id: record.id,
+      record_type: record.type,
+    });
+
+    try {
+      await deleteFraudster.mutateAsync(record.id);
+
+      trackRecord('delete');
+      trackEvent('record_deleted', {
+        record_type: record.type,
+        passport_series: record.passportSeriya,
       });
+
+      toast.success("Yozuv muvaffaqiyatli o'chirildi");
+      refetch();
+    } catch (err) {
+      console.error(err);
+      toast.error("O'chirishda xatolik yuz berdi");
+      trackError("Yozuvni o'chirishda xatolik", "MyRecords/handleDelete");
     }
   };
 
@@ -101,22 +133,30 @@ export default function MyRecords() {
   };
 
   const getTypeLabel = (type: string) => {
+    if (type === "Toza") return t("search.clean");
     return type === "NasiyaMijoz"
       ? t("myRecords.typeNasiya")
       : t("myRecords.typeUnpaid");
   };
 
-  const getTypeBadgeVariant = (type: string) => {
+  const getTypeBadgeVariant = (type: string): "default" | "destructive" | "secondary" | "outline" => {
+    if (type === "Toza") return "secondary";
     return type === "NasiyaMijoz" ? "default" : "destructive";
+  };
+
+  const getTypeBadgeClass = (type: string) => {
+    if (type === "Toza") return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300";
+    if (type === "NasiyaMijoz") return "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300";
+    return "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300";
   };
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
       <Helmet>
         <title>Mening Yozuvlarim - Tegstop.uz | Firibgarlardan Himoya</title>
-        <meta 
-          name="description" 
-          content="Siz qo'shgan firibgar va qarzdorlar haqidagi barcha yozuvlaringizni ko'ring va boshqaring." 
+        <meta
+          name="description"
+          content="Siz qo'shgan firibgar va qarzdorlar haqidagi barcha yozuvlaringizni ko'ring va boshqaring."
         />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://tegstop.uz/my-records" />
@@ -187,7 +227,7 @@ export default function MyRecords() {
                   Yozuvlarni yuklashda xatolik yuz berdi
                 </p>
                 <Button onClick={() => refetch()}>
-                  Qayta urinish
+                  {t("common.retry")}
                 </Button>
               </CardContent>
             </Card>
@@ -222,20 +262,29 @@ export default function MyRecords() {
             <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {recordsData.map((record: any, index: number) => (
                 <motion.div
-                  key={record.id}
+                  key={record.id + '-' + record.historyId}
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                 >
                   <Card className="hover:shadow-xl transition-all duration-300 border border-border bg-card">
                     <CardHeader>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-start gap-2">
                         <CardTitle className="text-lg font-semibold">
                           {record.name} {record.surname}
                         </CardTitle>
-                        <Badge variant={getTypeBadgeVariant(record.type)}>
-                          {getTypeLabel(record.type)}
-                        </Badge>
+                        <div className="flex flex-col gap-1 items-end">
+                          {/* User status (o'zi belgilagan) */}
+                          <Badge className={getTypeBadgeClass(record.userStatus)}>
+                            {getTypeLabel(record.userStatus)}
+                          </Badge>
+                          {/* Agar global type farq qilsa */}
+                          {record.currentType !== record.userStatus && (
+                            <span className="text-[10px] text-muted-foreground">
+                              Umumiy: {getTypeLabel(record.currentType)}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </CardHeader>
 
@@ -267,6 +316,16 @@ export default function MyRecords() {
                         </div>
                       </div>
 
+                      {/* Report Count */}
+                      {record.reportCount > 1 && (
+                        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-950 p-2 rounded-lg">
+                          <Users className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                          <span className="text-xs text-orange-700 dark:text-orange-300">
+                            {record.reportCount} foydalanuvchi tomonidan qo'shilgan
+                          </span>
+                        </div>
+                      )}
+
                       {/* Time - Agar NasiyaMijoz bo'lsa */}
                       {record.type === "NasiyaMijoz" && record.time && (
                         <div className="flex items-center justify-between bg-blue-50 dark:bg-blue-950 p-2 rounded-lg">
@@ -296,8 +355,40 @@ export default function MyRecords() {
                         </span>
                       </div>
 
-                      {/* DELETE BUTTON */}
-                      <div className="mt-3 pt-3 border-t">
+                      {/* Action Buttons */}
+                      <div className="mt-3 pt-3 border-t space-y-2">
+                        {/* To'ladi tugmasi - faqat NasiyaMijoz yoki TolovQilinmagan uchun */}
+                        {record.userStatus !== 'Toza' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-green-500 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
+                            onClick={() => handleMarkAsPaid(record)}
+                            disabled={markingPaidId === record.id}
+                          >
+                            {markingPaidId === record.id ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Belgilanmoqda...
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="mr-2 h-4 w-4" />
+                                To'ladi ✓
+                              </>
+                            )}
+                          </Button>
+                        )}
+
+                        {/* Agar allaqachon to'lagan bo'lsa */}
+                        {record.userStatus === 'Toza' && (
+                          <div className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 py-2">
+                            <CheckCircle className="h-4 w-4" />
+                            <span className="text-sm font-medium">To'langan</span>
+                          </div>
+                        )}
+
+                        {/* DELETE BUTTON */}
                         <Button
                           variant="destructive"
                           size="sm"
@@ -323,6 +414,24 @@ export default function MyRecords() {
           )}
         </motion.div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={confirmDialog.open} onOpenChange={(open) => !open && setConfirmDialog({ open: false, record: null })}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Yozuvni o'chirish</AlertDialogTitle>
+            <AlertDialogDescription>
+              Haqiqatan ham "{confirmDialog.record?.name} {confirmDialog.record?.surname}" yozuvini o'chirmoqchimisiz? Bu amalni qaytarib bo'lmaydi.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Bekor qilish</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              O'chirish
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

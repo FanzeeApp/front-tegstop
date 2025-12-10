@@ -4,9 +4,14 @@ import { persist } from 'zustand/middleware';
 interface User {
   id: string;
   name: string;
-  username: string;
+  username?: string;
+  email?: string;
   phone?: string;
   role?: string;
+  status?: string; // pending, approved, rejected, blocked
+  onboardingComplete?: boolean;
+  storeName?: string;
+  avatar?: string;
 }
 
 interface AuthState {

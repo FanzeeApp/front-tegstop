@@ -24,8 +24,9 @@ export interface Record {
   passportCode?: string;
   passportHash?: string;
   passportPreview?: string;
-  type: "NasiyaMijoz" | "TolovQilinmagan";
+  type: "NasiyaMijoz" | "TolovQilinmagan" | "Toza";
   time?: number;
+  note?: string;
   userId: string;
   user?: User;
   createdAt: string;
@@ -47,10 +48,11 @@ export interface SearchParams {
 }
 
 export interface CreateRecordData {
-  name?: string;
-  surname?: string;
+  name: string;
+  surname: string;
   passportSeriya: "AD" | "AB" | "KA" | "AE" | "AC";
   passportCode: string;
   type: "NasiyaMijoz" | "TolovQilinmagan";
   time?: number;
+  note?: string;
 }

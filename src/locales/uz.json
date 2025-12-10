@@ -24,7 +24,12 @@
     "passportCode": "Passport raqami",
     "searchButton": "Qidirish",
     "notFound": "Ma'lumot topilmadi",
-    "notFoundDesc": "Kiritilgan passport ma'lumotlari bo'yicha hech narsa topilmadi"
+    "notFoundDesc": "Kiritilgan passport ma'lumotlari bo'yicha hech narsa topilmadi",
+    "resultsFound": "Natija topildi",
+    "viewDetails": "Batafsil",
+    "addedByInfo": "Qo'shgan foydalanuvchi",
+    "verifiedUser": "Tasdiqlangan foydalanuvchi",
+    "clean": "Toza"
   },
   "record": {
     "fullName": "To'liq ism",
@@ -48,8 +53,8 @@
   },
   "addRecord": {
     "title": "Yangi yozuv qo'shish",
-    "name": "Ism (ixtiyoriy)",
-    "surname": "Familiya (ixtiyoriy)",
+    "name": "Ism",
+    "surname": "Familiya",
     "passportSeries": "Passport seriyasi",
     "passportCode": "Passport raqami",
     "type": "Turi",
@@ -98,11 +103,29 @@
     "phone": "Telefon",
     "role": "Rol",
     "accountCreated": "Hisob yaratilgan",
-    "logoutButton": "Chiqish"
+    "logoutButton": "Chiqish",
+    "balance": "Balans",
+    "totalEarned": "Jami topilgan",
+    "referralCode": "Referal kod",
+    "referralCodeDesc": "Do'stlaringizni taklif qiling va pul ishlang",
+    "copyCode": "Nusxalash",
+    "copied": "Nusxalandi!",
+    "invitedFriends": "Taklif qilgan do'stlarim",
+    "invitedFriendsDesc": "Referal dastur orqali taklif qilgan do'stlaringiz",
+    "totalInvited": "jami taklif qilgan do'stlarim",
+    "activeFriends": "Faol do'stlar",
+    "pendingFriends": "Kutilmoqda",
+    "bonusSystem": "Bonus Tizimi",
+    "bonusRegistration": "Ro'yxatdan o'tganida",
+    "bonusFirstRecord": "Birinchi fraudster qo'shganida",
+    "bonusTotal": "Jami bonus har bir aktiv user uchun!",
+    "bonusWithdraw": "Pul chiqarish: @saparboykayumov ga Telegram orqali"
   },
   "common": {
     "loading": "Yuklanmoqda...",
     "error": "Xatolik",
-    "success": "Muvaffaqiyatli"
+    "success": "Muvaffaqiyatli",
+    "locale": "uz-UZ",
+    "retry": "Qayta urinish"
   }
 }

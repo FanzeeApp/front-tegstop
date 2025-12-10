@@ -83,12 +83,10 @@ export const PWAInstallPrompt = () => {
     });
 
     if (outcome === 'accepted') {
-      console.log('✅ User accepted PWA install');
       trackEvent('pwa_install_accepted', {
         platform: getPlatform(),
       });
     } else {
-      console.log('❌ User dismissed PWA install');
       trackEvent('pwa_install_rejected', {
         platform: getPlatform(),
       });
