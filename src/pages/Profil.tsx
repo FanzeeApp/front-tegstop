@@ -402,10 +402,10 @@ const Profile = () => {
                         <div className="grid grid-cols-2 gap-2 sm:gap-3">
                           <div className="flex flex-col items-center p-2.5 sm:p-3 bg-green-50 dark:bg-green-950 rounded-lg">
                             <span className="text-xl sm:text-2xl font-bold text-green-600">
-                              {referralData?.stats?.active || 0}
+                              {referralData?.stats?.approved || 0}
                             </span>
-                            <span className="text-xs text-muted-foreground text-center">{t("profile.activeFriends")}</span>
-                            <span className="text-xs text-green-600 mt-1">+10,000 so'm</span>
+                            <span className="text-xs text-muted-foreground text-center">{t("profile.approvedFriends")}</span>
+                            <span className="text-xs text-green-600 mt-1">+5,000 so'm</span>
                           </div>
 
                           <div className="flex flex-col items-center p-2.5 sm:p-3 bg-orange-50 dark:bg-orange-950 rounded-lg">
@@ -413,7 +413,7 @@ const Profile = () => {
                               {referralData?.stats?.pending || 0}
                             </span>
                             <span className="text-xs text-muted-foreground text-center">{t("profile.pendingFriends")}</span>
-                            <span className="text-xs text-orange-600 mt-1">+5,000 so'm</span>
+                            <span className="text-xs text-muted-foreground mt-1">Kutilmoqda</span>
                           </div>
                         </div>
                       </div>
@@ -435,16 +435,12 @@ const Profile = () => {
                     </h4>
                     <ul className="space-y-2 text-xs sm:text-sm">
                       <li className="flex items-start gap-2">
-                        <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600 mt-0.5 shrink-0" />
-                        <span>{t("profile.bonusRegistration")}: <strong>5,000 so'm</strong></span>
+                        <Gift className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600 mt-0.5 shrink-0" />
+                        <span>Do'stingizni taklif qiling va admin tasdiqlasa: <strong className="text-green-600">5,000 so'm</strong></span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600 mt-0.5 shrink-0" />
-                        <span>{t("profile.bonusFirstRecord")}: <strong>5,000 so'm</strong></span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 mt-0.5 shrink-0" />
-                        <span>{t("profile.bonusTotal")}: <strong>10,000 so'm</strong></span>
+                        <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 mt-0.5 shrink-0" />
+                        <span>Cheksiz do'stlarni taklif qilishingiz mumkin</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 mt-0.5 shrink-0" />

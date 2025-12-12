@@ -113,12 +113,9 @@
     "invitedFriends": "Taklif qilgan do'stlarim",
     "invitedFriendsDesc": "Referal dastur orqali taklif qilgan do'stlaringiz",
     "totalInvited": "jami taklif qilgan do'stlarim",
-    "activeFriends": "Faol do'stlar",
+    "approvedFriends": "Tasdiqlangan",
     "pendingFriends": "Kutilmoqda",
     "bonusSystem": "Bonus Tizimi",
-    "bonusRegistration": "Ro'yxatdan o'tganida",
-    "bonusFirstRecord": "Birinchi fraudster qo'shganida",
-    "bonusTotal": "Jami bonus har bir aktiv user uchun!",
     "bonusWithdraw": "Pul chiqarish: @saparboykayumov ga Telegram orqali"
   },
   "common": {

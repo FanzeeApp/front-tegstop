@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, User, Calendar, AlertCircle, Shield, Phone,
   Building2, MapPin, Clock, X, ChevronRight, AlertTriangle,
-  CheckCircle2, UserCircle, ExternalLink, Users, History
+  CheckCircle2, UserCircle, ExternalLink, Users, History,
+  MessageSquare, FileText
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
@@ -277,30 +278,34 @@ export default function Home() {
                 Tarix ({history.length})
               </h4>
 
-              <div className="space-y-2 max-h-48 overflow-y-auto">
+              <div className="space-y-3 max-h-64 overflow-y-auto">
                 {history.map((h: any, idx: number) => (
                   <div
                     key={h.id || idx}
-                    className="p-3 rounded-lg bg-secondary/30 border border-border/50"
+                    className="p-3 rounded-xl bg-secondary/30 border border-border/50 hover:border-border transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                           h.action === 'mark_paid'
                             ? 'bg-green-100 dark:bg-green-900'
                             : h.action === 'auto_expire'
                             ? 'bg-blue-100 dark:bg-blue-900'
+                            : h.type === 'TolovQilinmagan'
+                            ? 'bg-red-100 dark:bg-red-900'
                             : 'bg-primary/10'
                         }`}>
                           {h.action === 'mark_paid' ? (
                             <CheckCircle2 className="w-4 h-4 text-green-600" />
                           ) : h.action === 'auto_expire' ? (
                             <Clock className="w-4 h-4 text-blue-600" />
+                          ) : h.type === 'TolovQilinmagan' ? (
+                            <AlertCircle className="w-4 h-4 text-red-600" />
                           ) : (
                             <UserCircle className="w-4 h-4 text-primary" />
                           )}
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <p className="text-sm font-medium">
                             {h.user?.name || 'Foydalanuvchi'}
                           </p>
@@ -323,6 +328,25 @@ export default function Home() {
                         })}
                       </span>
                     </div>
+
+                    {/* Izoh / Note - professional dizayn */}
+                    {h.note && (
+                      <div className="mt-3 ml-10">
+                        <div className="p-3 rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/50 dark:to-orange-950/50 border border-amber-200 dark:border-amber-800">
+                          <div className="flex items-start gap-2">
+                            <MessageSquare className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                            <div className="min-w-0">
+                              <p className="text-xs font-semibold text-amber-700 dark:text-amber-300 mb-1">
+                                Izoh:
+                              </p>
+                              <p className="text-sm text-amber-800 dark:text-amber-200 break-words whitespace-pre-wrap">
+                                {h.note}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -518,6 +542,23 @@ export default function Home() {
                                       <span className="text-orange-600 dark:text-orange-400 font-medium">
                                         {item.reportCount} foydalanuvchi qo'shgan
                                       </span>
+                                    </div>
+                                  )}
+
+                                  {/* Note/Izoh - TolovQilinmagan uchun */}
+                                  {item.type === 'TolovQilinmagan' && item.history?.[0]?.note && (
+                                    <div className="p-3 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/30 dark:to-orange-950/30 border border-red-200 dark:border-red-800/50">
+                                      <div className="flex items-start gap-2">
+                                        <MessageSquare className="w-4 h-4 text-red-500 dark:text-red-400 shrink-0 mt-0.5" />
+                                        <div className="min-w-0 flex-1">
+                                          <p className="text-xs font-semibold text-red-600 dark:text-red-400 mb-1">
+                                            Izoh:
+                                          </p>
+                                          <p className="text-sm text-red-700 dark:text-red-300 break-words line-clamp-2">
+                                            {item.history[0].note}
+                                          </p>
+                                        </div>
+                                      </div>
                                     </div>
                                   )}
 
