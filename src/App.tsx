@@ -22,6 +22,8 @@ const AddRecord = lazy(() => import("@/pages/AddRecord"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const Profile = lazy(() => import("@/pages/Profil"));
 const BulkUpload = lazy(() => import("@/pages/BulkUpload"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
+const Terms = lazy(() => import("@/pages/Terms"));
 
 // Loading component
 const PageLoader = () => (
@@ -104,6 +106,8 @@ const App = () => {
                 />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/pending-approval" element={<PendingApproval />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<Terms />} />
 
                 {/* Protected Routes */}
                 <Route

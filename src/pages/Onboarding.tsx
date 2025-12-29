@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { User, Store, Phone, Gift, Loader2, CheckCircle2, ArrowRight, Lock, AtSign, Eye, EyeOff } from "lucide-react";
+import { User, Store, Phone, Gift, Loader2, CheckCircle2, ArrowRight, Lock, AtSign, Eye, EyeOff, FileText, Shield } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,8 @@ import {
 import { toast } from "sonner";
 import { api } from "@/hooks/api";
 import { trackEvent, trackError } from "@/utils/analytics";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -38,6 +40,9 @@ export default function Onboarding() {
     confirmPassword: "",
     referralCode: referralCodeFromUrl || "",
   });
+
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -454,6 +459,51 @@ export default function Onboarding() {
                   </ul>
                 </div>
 
+                {/* Terms and Privacy Checkboxes */}
+                <div className="space-y-3 p-4 bg-muted/50 rounded-lg border">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="terms"
+                      checked={acceptedTerms}
+                      onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm leading-relaxed cursor-pointer"
+                    >
+                      <FileText className="w-4 h-4 inline-block mr-1 text-primary" />
+                      <Link to="/terms" target="_blank" className="text-primary underline hover:text-primary/80">
+                        Foydalanish shartlari
+                      </Link>
+                      {" "}bilan tanishdim va roziman
+                    </label>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="privacy"
+                      checked={acceptedPrivacy}
+                      onCheckedChange={(checked) => setAcceptedPrivacy(checked as boolean)}
+                    />
+                    <label
+                      htmlFor="privacy"
+                      className="text-sm leading-relaxed cursor-pointer"
+                    >
+                      <Shield className="w-4 h-4 inline-block mr-1 text-primary" />
+                      <Link to="/privacy-policy" target="_blank" className="text-primary underline hover:text-primary/80">
+                        Maxfiylik siyosati
+                      </Link>
+                      {" "}bilan tanishdim va shaxsiy ma'lumotlarimni qayta ishlashga roziman
+                    </label>
+                  </div>
+
+                  {(!acceptedTerms || !acceptedPrivacy) && (
+                    <p className="text-xs text-muted-foreground">
+                      Davom etish uchun ikkala shartga ham rozilik bildiring
+                    </p>
+                  )}
+                </div>
+
                 <div className="flex gap-2">
                   <Button variant="outline" onClick={handleBack} className="flex-1">
                     Orqaga
@@ -461,7 +511,7 @@ export default function Onboarding() {
                   <Button
                     onClick={handleSubmit}
                     className="flex-1 bg-gradient-to-r from-primary to-primary/80"
-                    disabled={loading}
+                    disabled={loading || !acceptedTerms || !acceptedPrivacy}
                   >
                     {loading ? (
                       <>

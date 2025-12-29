@@ -265,8 +265,12 @@ export default function Login() {
 
             <p className="text-center text-xs text-muted-foreground mt-4">
               Platformaga kirish orqali{" "}
-              <a href="#" className="underline">
+              <a href="/terms" className="underline hover:text-primary">
                 foydalanish shartlari
+              </a>
+              {" "}va{" "}
+              <a href="/privacy-policy" className="underline hover:text-primary">
+                maxfiylik siyosati
               </a>
               ga rozilik bildirasiz.
             </p>
