@@ -48,7 +48,7 @@ export default defineConfig(({ mode }) => ({
         // Cache strategiyasi - Faqat GET requestlar
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/api\.tegstop\.uz\/.*/i,
+            urlPattern: /^https:\/\/tegstop-railway-production\.up\.railway\.app\/.*/i,
             handler: 'NetworkFirst',
             method: 'GET', // Faqat GET
             options: {
